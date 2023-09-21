@@ -1,0 +1,39 @@
+{% extends 'main/base.html'%}
+
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Информация:"><use xlink:href="#info-fill"/></svg>
+        <div>
+            Далее представлена форма регистрации нового пользователя
+        </div>
+    </div>
+    <form class="position-absolute top-50 start-30 translate-middle-y text-light" method="POST" action=".">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Имя пользователя:</label>
+            <input type="text" required name="username" class="form-control" id="username" placeholder="StrangeUser">
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">Пароль:</label>
+            <input type="password" required name="password1" class="form-control" id="password1" placeholder="********">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Подтверждение пароля:</label>
+            <input type="password" required name="password2" class="form-control" id="password2" placeholder="********">
+        </div>
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ error | escape }}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <input type="submit" class="btn btn-primary">
+        <input type="reset" class="btn btn-danger">
+    </form>
+{% endblock %}
