@@ -1,0 +1,33 @@
+{% extends 'main/base.html'%}
+
+{% block title %}
+    Чаты | {{ chat.name }}
+{% endblock %}
+
+{% block content %}
+<br>
+{% for message in messages %}
+    {% if forloop.counter|divisibleby:2 %}
+        <div class="card px-5 mb-1" style="background-color: rgb(55, 211, 225); max-width: 600px; margin: auto;">
+    {% else %}
+        <div class="card px-5 mb-1" style="background-color: rgb(55, 225, 123); text-align: right; max-width: 600px; margin: auto;">  
+    {% endif %} 
+        <figure class="p-0 mb-0">    
+            <blockquote class="blockquote" >
+                <p>{{ message.content }}</p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0 text-muted">
+            {{  message.user.username }}
+            </figcaption>
+        </figure>
+    </div>
+
+{% endfor %}
+<div style="max-width: 600px; margin: auto;">
+    <form method="post" action=".">
+        {% csrf_token %}
+        <input type="text" style="width: 500px; height: 100px; border-radius: 20px;" name="message" placeholder="Сообщение...">
+        <button id="chat-message-submit">Отправить</button>
+    </form>
+</div>
+{% endblock %}
